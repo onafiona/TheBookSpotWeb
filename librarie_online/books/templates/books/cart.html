@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'books/css/styles.css' %}">
+    <title>Book List</title>
+</head>
+<header>
+    <img src="{% static 'books/icons/header-icon.svg' %}", alt="." class="header-icon">
+    <h1>The Book Spot</h1>
+</header>
+
+<body>
+    <div class="cart-container">
+        <h1 class="cart-title">Cart</h1>
+
+        {% if cart_items%}
+            <ul class="ul-style">
+                {% for item in cart_items %}
+                    <li class="li-style">
+                        <strong class="title-book-cart">{{ item.book.title }}</strong>
+                        <br> 
+                        <span class="price-book-cart">({{ item.total_price }} RON)</span>
+                        <form method="POST" action="{% url 'books:change_quantity' book_id=item.book.id %}" class="quantity-form">
+                            {% csrf_token %}
+                            <button type="submit" name="action" value="decrease" class="buttons">-</button>
+                            <input type="text" value="{{ item.quantity }}">
+                            <button type="submit" name="action" value="increase" class="buttons">+</button>
+                        </form>
+                    </li>
+                {% endfor %}
+            </ul>
+            <h3> Total: {{ total_price }} RON</h3>
+            <div class="bottom-buttons">
+                <form method="POST" action="{% url 'books:clear_cart' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="buttons">Clear Cart</button>
+                </form>
+                <button class="buttons"><a href="{% url 'orders:place_order' %}">Place order</a></button>    
+            </div>
+            {% else %}
+            <p>Your cart is empty</p>
+        {% endif %}
+    </div>
+    <br>
+    <br>
+    <div class="bottom-buttons">
+        <button class="buttons"><a href="{% url 'books:book_list' %}"> Back to Bookstore</a></button>
+    </div>
+</body>
+

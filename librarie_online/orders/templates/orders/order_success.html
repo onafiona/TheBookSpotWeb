@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'books/css/styles.css' %}">
+    <title>Book List</title>
+</head>
+<header>
+    <img src="{% static 'books/icons/header-icon.svg' %}", alt="." class="header-icon">
+    <h1>The Book Spot</h1>
+</header>
+
+<body>
+    <div class="order-container">
+        <h1 class="order-success-title">Order Placed Successfully</h1>
+        <p class="confirmation-message">Your order has been placed successfully. Order ID: {{ order.id }}</p>
+        <p class="confirmation-message">Total Price: {{ order.total_price }} RON</p>    
+        <div class="icon-container"></div>
+            <img src="{% static 'books/icons/done-icon.svg' %}" alt="Success" class="success-icon">
+        </div>
+    </div>
+    <div class="bottom-buttons">
+        <button class="buttons"><a href="{% url 'books:book_list' %}">Back to the book list.</a></button>
+    </div>
+    
+</body>

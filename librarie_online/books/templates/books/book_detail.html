@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Details: {{ book.title }}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'books/css/styles.css' %}">
+</head>
+<body>
+    <header>
+        <img src="{% static 'books/icons/header-icon.svg' %}", alt="." class="header-icon">
+        <h1>The Book Spot</h1>
+    </header>
+    <div class="book-details-container">
+        <div class="book-info">
+            <h1 class="book-title">{{ book.title }}</h1>
+            <p><strong>{{ book.author }}</p>
+            <p><strong>Category:</strong>{{ book.categoryid }}</p>
+            <img src="{{ book.image.url }}" alt="{{ book.title }}">
+            <p class="book-price">{{ book.price }} RON</p>
+            <p><strong>Stock:</strong> {{ book.stock }}</p>
+            <form action="{% url 'books:add_to_cart' book.id %}" method="post">
+                {% csrf_token %}
+                <label for="quantity">Quantity: </label>
+                <input type="number" id="quantity" name="quantity" value="1" min="1">
+                <button type="submit" class="buttons">Add to Cart</button>
+            </form>
+        </div>
+        
+        <div class="book-description">
+            <p>{{ book.description }}</p>
+        </div>
+        
+
+        
+    </div>
+    <div class="bottom-buttons">
+        <button class="buttons"><a href="{% url 'books:book_list' %}">Back to the book list.</a></button>
+        <button class="buttons"><a href="{% url 'books:view_cart' %}">View Cart</a></button>
+    </div>
+
+    </body>
+</html>
